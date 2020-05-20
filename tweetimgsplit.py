@@ -1,16 +1,18 @@
 ### tweetimgsplit.py
 import cv2
 import sys
+import os
 # 処理する画像ファイル名を定義
-BaseFile = sys.argv[1] + '.jpg'
-#BaseFile = sys.argv[1] + '.png'
+BaseFile,ExtFile = os.path.splitext(os.path.basename(sys.argv[1]))
 # 書き出すファイル名を定義
 MakeFile = [ 0 for i in range(5) ]
 for i in range(1,5):
-  MakeFile[i] = sys.argv[1] + '_' + str(i) + '.jpg'
-#  MakeFile[i] = sys.argv[1] + '_' + str(i) + '.png'
+  if 'jpg' in ExtFile:
+    MakeFile[i] = BaseFile + '_' + str(i) + '.jpg'
+  elif 'png' in ExtFile:
+    MakeFile[i] = BaseFile + '_' + str(i) + '.png'
 # 画像の読み出し
-ImgSrc = cv2.imread(BaseFile)
+ImgSrc = cv2.imread(sys.argv[1])
 # 画像のサイズを取得
 ymax, xmax, channels = ImgSrc.shape[:3]
 # 画像のサイズが分割可能か確認
